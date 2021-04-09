@@ -4,47 +4,54 @@ When [geodatabase-buildings](https://github.com/mattyschell/geodatabase-building
 
 1. The tax lot changed after the most recent building edit.
 
-We will report these and an editor will update the building base_bbl value.
+    We will report these and an editor will update the building base_bbl value.
 
 2. The building base_bbl is incorrect.
 
-We will report these and an editor will update the building base_bbl value.
+    We will report these and an editor will update the building base_bbl value.
 
 3. The Dept. of Finance tax lots are not spatially accurate.
 
-We will track these so that they are reported by QA only once, and potentially send these to the Dept. of Finance. for attention.
+    We will track these so that they are reported by QA only once, and potentially 
+    send these to the Dept. of Finance. for attention.
 
 4. The building is not in a tax lot at all - easements, outside city limits, etc.
 
-We will track these so that they are reported by QA only once and then never
-look at them again.
+    We will track these so that they are reported by QA only once and then never
+    look at them again.
 
 # Dependencies
 
 * SQLPlus and credentials to an Oracle schema with buildings
 
-# Run 
-
 # Steps
 
-1. Import Dept. of Finance tax_lot_polygon geometries into the building schema.  
+### 1. Import Dept. of Finance tax_lot_polygon geometries into the building schema.  
 
 Consider running in development or staging with imported buildings, limiting our churn though add and delete tables.
 
-2. Execute the QA script
+### 2. Run the QA 
 
 ```bat
-XX
+sqlplus schemaname/iluvesri247@databasename @run.sql
 ```
-* output: bbl-qa.csv
 
-3. Fix any that are category 1 or 2
+    output: bbl-qa.csv
 
-4. Add any acknowledged in category 3 or 4 to bbl-qa-ack.csv
+### 3. Fix any that are category 1 or 2
 
-5. Rerun the QA script
+### 4. Add any acknowledged in category 3 or 4 to bbl-qa-ack.csv
 
-* output: Should be an empty bbl-qa.csv 
+### 5. Reload acknowledged data and re-run the QA 
 
-5. Commit the latest bbl-qa-ack.csv to this repo
+```shell
+./bbl-qa-writeack.sh
+```
+
+```bat
+sqlplus schemaname/iluvesri247@databasename @run.sql
+```
+    output: Should be empty bbl-qa.csv 
+
+### 6. Commit the latest bbl-qa-ack.csv to this repo
 
