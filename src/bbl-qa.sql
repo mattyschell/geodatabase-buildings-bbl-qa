@@ -1,6 +1,9 @@
-insert into bbl_qa (doitt_id)
+insert into bbl_qa 
+   (doitt_id
+   ,base_bbl)
 select 
-    a.doitt_id 
+    a.doitt_id
+   ,a.base_bbl 
 from
     building_evw a
 join

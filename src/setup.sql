@@ -31,11 +31,12 @@ end;
 /
 -- create work tables
 create table bbl_qa (
-    doitt_id number
+    doitt_id    number
+   ,base_bbl    number
    ,constraint bbl_qa_pkc primary key(doitt_id)
 ); 
 create table bbl_qa_ack (
-    doitt_id number
+    doitt_id    number
    ,constraint bbl_qa_ack_pkc primary key(doitt_id)
 ); 
 
