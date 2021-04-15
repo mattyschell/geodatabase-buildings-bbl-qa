@@ -11,7 +11,7 @@ join
 on 
     a.base_bbl = b.bbl
 where 
-    sdo_geom.relate(a.shape, 'anyinteract', b.shape, .0005) <> 'TRUE'
+    sdo_geom.relate(a.shape,'anyinteract',b.shape,.0005) <> 'TRUE'
 and b.bbl not in (
         select 
             bbl
@@ -24,4 +24,19 @@ and a.doitt_id not in (
             doitt_id 
         from 
             bbl_qa_ack);
+commit;
+delete from 
+    bbl_qa   
+where 
+    doitt_id in (select 
+                    a.doitt_id
+                from
+                    building_evw a
+                join
+                    bbl_qa b
+                on 
+                    a.doitt_id = b.doitt_id
+                where
+                    sdo_geom.relate(a.shape,'anyinteract',(select shape from boroughagg),.0005) <> 'TRUE'
+                );
 commit;

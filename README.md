@@ -26,9 +26,13 @@ When [geodatabase-buildings](https://github.com/mattyschell/geodatabase-building
 
 # Steps
 
-### 1. Import Dept. of Finance tax_lot_polygon geometries into the building schema.  
+### 1. Import Dept. of Finance tax_lot_polygon geometries and borough boundaries into the building schema.  
+
+We will automate this later.  There's an aggregated borough boundary in the
+data directory of this repository.
 
 Consider running in development or staging with imported buildings, limiting our churn though add and delete tables.
+ 
 
 ### 2. Run the QA 
 
