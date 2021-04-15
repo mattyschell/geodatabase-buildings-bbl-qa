@@ -4,6 +4,7 @@ SET ECHO OFF
 SET TERMOUT OFF
 SET PAGESIZE 0
 set LINESIZE 9999
+set TRIMSPOOL ON
 @src/bbl-dab-load.sql
 SPOOL bbl-dab-history.csv
 select 'BBL, CHANGE_DATE, WIZARD_NAME, LOT_ACTION, AUTH_FOR_CHANGE' from dual;
