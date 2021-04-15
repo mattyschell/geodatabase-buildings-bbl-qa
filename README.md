@@ -12,13 +12,12 @@ When [geodatabase-buildings](https://github.com/mattyschell/geodatabase-building
 
 3. The Dept. of Finance tax lots are not spatially accurate.
 
-    We will track these so that they are reported by QA only once, and potentially 
-    send these to the Dept. of Finance. for attention.
+    We will track these so that they are reported by QA only once, and potentially send these to the Dept. of Finance. for attention.
 
 4. The building is not in a tax lot at all - easements, outside city limits, etc.
 
     We will track these so that they are reported by QA only once and then never
-    look at them again.
+    look at them again. We will always ignore buildings not within city limits.
 
 # Dependencies
 
@@ -50,6 +49,8 @@ sqlplus taxreadonly/iluvesri247@databasename @run-dab.sql
 ```
     output: bbl-dab-history.csv
 
+Commit bbl-dab-history.csv to Github for helpful csv filtering.
+
 
 ### 4. Fix any that are category 1 or 2
 
@@ -64,7 +65,9 @@ sqlplus taxreadonly/iluvesri247@databasename @run-dab.sql
 ```bat
 sqlplus schemaname/iluvesri247@databasename @run.sql
 ```
-    output: Should be empty bbl-qa.csv 
+    output: bbl-qa.csv 
+
+Output bbl-qa.csv will be empty if all IDs were fixed or acknowledged
 
 ### 7. Commit the latest bbl-qa-ack.csv to this repo
 
