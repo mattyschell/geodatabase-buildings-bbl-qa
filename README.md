@@ -17,7 +17,8 @@ When [geodatabase-buildings](https://github.com/mattyschell/geodatabase-building
 4. The building is not in a tax lot at all - easements, outside city limits, etc.
 
     We will track these so that they are reported by QA only once and then never
-    look at them again. We will always ignore buildings not within city limits.
+    look at them again. We will always ignore buildings outside of city limits 
+    or on the boundary but not touching a tax lot.
 
 # Dependencies
 
@@ -27,10 +28,11 @@ When [geodatabase-buildings](https://github.com/mattyschell/geodatabase-building
 
 ### 1. Import Dept. of Finance tax_lot_polygon geometries and borough boundaries into the building schema.  
 
-We will automate this later.  There's an aggregated borough boundary in the
+We will automate this later.  There's an aggregated borough boundary in the 
 data directory of this repository.
 
-Consider running in development or staging with imported buildings, limiting our churn though add and delete tables.
+Consider running in development or staging with imported buildings, limiting our
+churn though add and delete tables.
  
 
 ### 2. Run the QA 
@@ -42,7 +44,8 @@ sqlplus schemaname/iluvesri247@databasename @run.sql
 
 ### 3. Refresh bbl-dab-history.csv
 
-Execute somewhere with read-only access to the taxmap digital alteration book. 
+Execute somewhere with read-only access to the taxmap digital alteration book.
+We use this csv for reference in the review. 
 
 ```bat
 sqlplus taxreadonly/iluvesri247@databasename @run-dab.sql

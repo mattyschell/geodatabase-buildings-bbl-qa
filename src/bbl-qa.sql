@@ -40,3 +40,22 @@ where
                     sdo_geom.relate(a.shape,'anyinteract',(select shape from boroughagg),.0005) <> 'TRUE'
                 );
 commit;
+-- this pays no mind to whether these buildings on the city line happen to touch
+-- some other tax lot.  I reviewed the list and as of coding all buildings on 
+-- the city line do not touch any tax lots. I see no reason to overcomplicate 
+-- for nonexistent edge cases
+delete from 
+    bbl_qa   
+where 
+    doitt_id in (select 
+                    a.doitt_id
+                from
+                    building_evw a
+                join
+                    bbl_qa b
+                on 
+                    a.doitt_id = b.doitt_id
+                where
+                    sdo_geom.relate(a.shape,'mask=OVERLAPBDYINTERSECT',(select shape from boroughagg),.0005) <> 'FALSE'
+                );       
+commit;
