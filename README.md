@@ -17,8 +17,13 @@ When [geodatabase-buildings](https://github.com/mattyschell/geodatabase-building
 4. The building is not in a tax lot at all - easements, outside city limits, etc.
 
     We will track these so that they are reported by QA only once and then never
-    look at them again. We will always ignore buildings outside of city limits 
+    look at them again. We will always ignore buildings outside of city limits
     or on the boundary but not touching a tax lot.
+
+    Some building base_bbls have no matching tax lot because they are spatially
+    located outside of tax lots, like on subway lines or on bridges.  We will
+    never identify these in QA but we may add some of these "pseudo" bbls to 
+    the same "acknowledged" list as we encounter them in QA.
 
 # Dependencies
 
