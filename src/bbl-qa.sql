@@ -1,7 +1,7 @@
 insert into bbl_qa 
    (doitt_id
    ,base_bbl)
-select 
+select /*+ ALL_ROWS */
     a.doitt_id
    ,a.base_bbl 
 from
