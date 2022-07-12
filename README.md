@@ -43,8 +43,7 @@ sqlplus schemaname/iluvesri247@databasename @run.sql
 
 ### 3. Refresh bbl-dab-history.csv
 
-Execute somewhere with read-only access to the taxmap digital alteration book.
-We use this csv for reference in the review. 
+Execute somewhere with read-only access to the taxmap digital alteration book. We use this csv for reference in the review. 
 
 ```bat
 sqlplus taxreadonly/iluvesri247@databasename @run-dab.sql

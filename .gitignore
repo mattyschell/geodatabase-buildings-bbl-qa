@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 
 scratch/
+
+buildings-bbl-qa.bat
