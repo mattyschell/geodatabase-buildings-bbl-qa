@@ -60,6 +60,10 @@ if __name__ == "__main__":
                                          fetchsql('cleangeoms.sql'
                                                   ,targetgdb.database))
 
+    sdereturn = cx_sde.execute_immediate(targetsdeconn,
+                                         fetchsql('deletebadgeoms.sql'
+                                                  ,targetgdb.database))
+
     #logger.info('indexing {0} on {1}'.format('BIN'
     #                                         ,targetfcname))
     #output = targetfc.index('BIN')
