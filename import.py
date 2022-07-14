@@ -49,11 +49,16 @@ if __name__ == "__main__":
                                          fetchsql('compileremovecurves.sql'
                                                   ,targetgdb.database))
 
-    # editing base table before versioning and indexes, monitor performance
     sdereturn = cx_sde.execute_immediate(targetsdeconn,
                                          """begin """ \
                                        + """ remove_curves('{0}','{1}'); """.format(targetfcname,'objectid') \
                                        + """end; """)
+
+    # fix any baddies and delete any junk
+
+    sdereturn = cx_sde.execute_immediate(targetsdeconn,
+                                         fetchsql('cleangeoms.sql'
+                                                  ,targetgdb.database))
 
     #logger.info('indexing {0} on {1}'.format('BIN'
     #                                         ,targetfcname))
@@ -61,6 +66,6 @@ if __name__ == "__main__":
 
     logger.info('updating statistics on {0}'.format(targetfcname))
 
-    output = targetfc.analyze()
+    output = targetfc.analyze(['BUSINESS'])
     
     logger.info('completed import of {0}'.format(targetfcname))

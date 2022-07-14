@@ -23,16 +23,15 @@ When [geodatabase-buildings](https://github.com/mattyschell/geodatabase-building
 # Dependencies
 
 * SQLPlus and credentials to an Oracle schema with buildings
+* When running the full scripted QA, also 
+    * SDE file to source tax lots from Dept of Finance
+    * [geodatabase-toiler](https://github.com/mattyschell/geodatabase-toiler) on PYTHONPATH
 
-# Steps
+# Steps - Start to Finish
 
 ### 1. Import Dept. of Finance tax_lot_polygon geometries and borough boundaries into the building schema.  
 
-We will automate this later.  There's an aggregated borough boundary in the data directory of this repository.
-
-Consider running in development or staging with imported buildings, limiting our churn though add and delete tables.
- 
-Probably best to validate these geometries.
+There's an aggregated borough boundary in the data directory of this repository. 
 
 ### 2. Run the QA 
 
@@ -41,7 +40,7 @@ sqlplus schemaname/iluvesri247@databasename @run.sql
 ```
     output: bbl-qa.csv
 
-### 3. Refresh bbl-dab-history.csv
+### 3. Helper: Refresh bbl-dab-history.csv
 
 Execute somewhere with read-only access to the taxmap digital alteration book. We use this csv for reference in the review. 
 
@@ -71,4 +70,15 @@ sqlplus schemaname/iluvesri247@databasename @run.sql
 Output bbl-qa.csv will be empty if all IDs were fixed or acknowledged
 
 ### 7. Commit the latest bbl-qa-ack.csv to this repo
+
+# Steps - Automate a periodic QA
+
+Copy buildings-bbl-qa-sample.bat to buildings-bbl-qa.bat.  Update the environmentals at the top of the script.
+
+
+```bat
+buildings-bbl-qa.bat
+```
+
+output: An email with the QA results. 
 
