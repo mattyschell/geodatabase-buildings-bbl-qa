@@ -16,7 +16,7 @@ set BBLQA=C:\gis\geodatabase-buildings-bbl-qa\
 set BATLOG=%TARGETLOGDIR%buildings-bbl-qa.log
 set PROPY=c:\Progra~1\ArcGIS\Pro\bin\Python\envs\arcgispro-py3\python.exe
 set TAXPOLYS=TAX_LOT_POLYGON
-set GEODATABASESCRIPTS=CWD
+set GEODATABASESCRIPTS=%CD%
 echo starting import of tax lots to %DBNAME% on %date% at %time% > %BATLOG%
 %PROPY% %BBLQA%delete.py %TAXPOLYS% && (
   echo. deleted target %TAXPOLYS% on %date% at %time% >> %BATLOG%
