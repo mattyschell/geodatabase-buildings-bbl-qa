@@ -1,0 +1,8 @@
+SET HEADING OFF
+SET FEEDBACK OFF
+SET ECHO OFF
+SET TERMOUT OFF
+SET PAGESIZE 0
+SPOOL bbl-qa.csv
+select 'Failed to write output' from dual;
+SPOOL OFF
