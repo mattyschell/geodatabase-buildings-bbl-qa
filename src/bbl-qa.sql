@@ -1,3 +1,6 @@
+-- part 1 - buildings who do not touch the indicated bbl of the building
+-- part 2 - buildings with a bbl that does not exist at all
+--          (exclude skybridge and building under construction)
 insert into bbl_qa 
    (doitt_id
    ,base_bbl)
@@ -23,8 +26,36 @@ and a.doitt_id not in (
         select 
             doitt_id 
         from 
+            bbl_qa_ack)
+union
+select 
+    a.doitt_id
+   ,a.base_bbl 
+from 
+    building_evw a
+where 
+    a.base_bbl in (
+        select 
+            base_bbl 
+        from 
+            building_evw
+        where 
+            feature_code in (1000,1002,1003,1004,1005,1006,2100,5110)
+        and 
+            base_bbl not like '%9999'
+        minus
+        select 
+            bbl 
+        from 
+            tax_lot_polygon
+    )
+and a.doitt_id not in (
+        select 
+            doitt_id 
+        from 
             bbl_qa_ack);
 commit;
+-- for buildings outside of the borough we do not expect tax lots
 delete from 
     bbl_qa   
 where 
@@ -40,6 +71,7 @@ where
                     sdo_geom.relate(a.shape,'anyinteract',(select shape from boroughagg),.0005) <> 'TRUE'
                 );
 commit;
+-- for buildings on the borough line we also have no expectations
 -- this pays no mind to whether these buildings on the city line happen to touch
 -- some other tax lot.  I reviewed the list and as of coding all buildings on 
 -- the city line do not touch any tax lots. I see no reason to overcomplicate 
