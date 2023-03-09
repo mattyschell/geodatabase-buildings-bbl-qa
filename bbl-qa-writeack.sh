@@ -1,8 +1,14 @@
 #!/bin/bash
 rm src/bbl-qa-ack.sql
 # strip any windows line separators
-dos2unix bbl-qa.csv
-# ensure an empty line at the end of the csv
+dos2unix bbl-qa-ack.csv
+# this is badly written 
+# bbl-qa-ack.csv should not have an empty line at the end
+# then this echo will put a blank line there
+# remove this echo and the last ID doesnt get written to SQL
+# but add a line to bbl-qa-ack.csv and run this echo
+# and we get an insert values(); which will error.  
+# todo: Do better 
 echo >> bbl-qa-ack.csv
 cat bbl-qa-ack.csv | while read y
 do
