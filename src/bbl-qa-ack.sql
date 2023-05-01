@@ -304,7 +304,7 @@ insert into bbl_qa_ack values(1299438);
 insert into bbl_qa_ack values(1299437); 
 insert into bbl_qa_ack values(102611); 
 insert into bbl_qa_ack values(205276); 
-insert into bbl_qa_ack values(205276); 
+insert into bbl_qa_ack values(688234); 
 insert into bbl_qa_ack values(698546); 
 insert into bbl_qa_ack values(1299504); 
 commit;
