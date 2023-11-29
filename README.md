@@ -24,7 +24,7 @@ When [geodatabase-buildings](https://github.com/mattyschell/geodatabase-building
 
 * SQLPlus and credentials to an Oracle schema with buildings
 * When running the full scripted QA, also 
-    * SDE file to source tax lots from Dept of Finance
+    * Source tax (REST service or ESRI Enterprise Geodatabase) lots from Dept of Finance
     * [geodatabase-toiler](https://github.com/mattyschell/geodatabase-toiler) on PYTHONPATH
 
 # Steps - Start to Finish
