@@ -28,6 +28,8 @@ echo starting import of tax lots to %DBNAME% on %date% at %time% >> %BATLOG%
 ) || (
   %PROPY% %BBLQA%notify.py "Failed to import %TAXPOLYS% on %SDEFILE%" %NOTIFY% && EXIT /B 1
 ) 
+set HTTP_PROXY=
+set HTTPS_PROXY=
 echo. >> %BATLOG% echo starting qa of building bbls in %DBNAME% on %date% at %time% >> %BATLOG%
 sqlplus -s -l BLDG/%DBPASS%@%DBNAME% @run.sql && (
   %PROPY% %BBLQA%notify.py "Completed buildings-bbl-qa in %DBNAME%" %NOTIFY% 
