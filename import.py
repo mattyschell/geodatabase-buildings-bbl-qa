@@ -64,10 +64,6 @@ if __name__ == "__main__":
                                          fetchsql('deletebadgeoms.sql'
                                                   ,targetgdb.database))
 
-    #logger.info('indexing {0} on {1}'.format('BIN'
-    #                                         ,targetfcname))
-    #output = targetfc.index('BIN')
-
     logger.info('updating statistics on {0}'.format(targetfcname))
 
     output = targetfc.analyze(['BUSINESS'])
