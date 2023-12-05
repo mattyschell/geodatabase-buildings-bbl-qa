@@ -17,6 +17,7 @@ set BATLOG=%TARGETLOGDIR%buildings-bbl-qa.log
 set PROPY=c:\Progra~1\ArcGIS\Pro\bin\Python\envs\arcgispro-py3\python.exe
 set TAXPOLYS=TAX_LOT_POLYGON
 set PYTHONPATH=%BASEPATH%\geodatabase-toiler\src\py
+set GEODATABASESCRIPTS=%CD%
 echo starting import of tax lots to %DBNAME% on %date% at %time% >> %BATLOG%
 %PROPY% %BBLQA%delete.py %TAXPOLYS% && (
   echo. >> %BATLOG% echo deleted target %TAXPOLYS% on %date% at %time% >> %BATLOG%
@@ -30,10 +31,12 @@ echo starting import of tax lots to %DBNAME% on %date% at %time% >> %BATLOG%
 ) 
 set HTTP_PROXY=
 set HTTPS_PROXY=
+cd %BBLQA%
 echo. >> %BATLOG% echo starting qa of building bbls in %DBNAME% on %date% at %time% >> %BATLOG%
 sqlplus -s -l BLDG/%DBPASS%@%DBNAME% @run.sql && (
   %PROPY% %BBLQA%notify.py "Completed buildings-bbl-qa in %DBNAME%" %NOTIFY% 
 ) || (
   %PROPY% %BBLQA%notify.py "Failed to execute buildings-bbl-qa in %DBNAME%" %NOTIFY% && EXIT /B 1
 ) 
+cd %GEODATABASESCRIPTS%
 echo. >> %BATLOG% echo geodatabase-buildings-bbl-qa sent output to %NOTIFY% >> %BATLOG% 
