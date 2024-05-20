@@ -14,18 +14,18 @@ set TARGETLOGDIR=%BASEPATH%geodatabase-scripts\logs\buildings_bbl_qa\
 set BBLQA=%BASEPATH%geodatabase-buildings-bbl-qa\
 set BATLOG=%TARGETLOGDIR%buildings-bbl-qa.log
 set PROPY=c:\Progra~1\ArcGIS\Pro\bin\Python\envs\arcgispro-py3\python.exe
-set TAXPOLYS=TAX_LOT_POLYGON
+set TAXPOLYSDTM=TAX_LOT_POLYGON_DTM
 set GEODATABASESCRIPTS=%CD%
 echo starting import of tax lots to %DBNAME% on %date% at %time% >> %BATLOG%
-%PROPY% %BBLQA%delete.py %TAXPOLYS% && (
-  echo. >> %BATLOG% echo deleted target %TAXPOLYS% on %date% at %time% >> %BATLOG%
+%PROPY% %BBLQA%delete.py %TAXPOLYSDTM% && (
+  echo. >> %BATLOG% echo deleted target %TAXPOLYSDTM% on %date% at %time% >> %BATLOG%
 ) || (
-  %PROPY% %BBLQA%notify.py "Failed to delete %TAXPOLYS% on %SDEFILE%" %NOTIFY% && EXIT /B 1
+  %PROPY% %BBLQA%notify.py "Failed to delete %TAXPOLYSDTM% on %SDEFILE%" %NOTIFY% && EXIT /B 1
 )  
-%PROPY% %BBLQA%import.py %TAXPOLYS% %SOURCEFC% && (
-  echo. >> %BATLOG% echo imported target %TAXPOLYS% on %date% at %time% >> %BATLOG%
+%PROPY% %BBLQA%import.py %TAXPOLYSDTM% %SOURCEFC% && (
+  echo. >> %BATLOG% echo imported target %TAXPOLYSDTM% on %date% at %time% >> %BATLOG%
 ) || (
-  %PROPY% %BBLQA%notify.py "Failed to import %TAXPOLYS% on %SDEFILE%" %NOTIFY% && EXIT /B 1
+  %PROPY% %BBLQA%notify.py "Failed to import %TAXPOLYSDTM% on %SDEFILE%" %NOTIFY% && EXIT /B 1
 ) 
 set HTTP_PROXY=
 set HTTPS_PROXY=
