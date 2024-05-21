@@ -6,7 +6,7 @@
 -- our next work table, tax_lot_polygon, is unshackled 
 begin
     execute immediate 'drop table tax_lot_polygon';
-exception s
+exception
 when others 
 then 
     null;
@@ -20,9 +20,9 @@ and column_name = 'SHAPE';
 create table 
     tax_lot_polygon
 as select 
-     a.objectid
-    ,a.bbl
-    ,sdo_cs.transform(a.shape,2263)
+     a.objectid as objectid
+    ,a.bbl as bbl
+    ,sdo_cs.transform(a.shape,2263) as shape
 from tax_lot_polygon_dtm a;
 alter table 
     tax_lot_polygon 

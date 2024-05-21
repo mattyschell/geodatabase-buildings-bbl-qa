@@ -1,5 +1,5 @@
 update 
-    tax_lot_polygon a
+    tax_lot_polygon_dtm a
 set
     a.shape = sdo_util.rectify_geometry(a.shape, .0005)
 where
