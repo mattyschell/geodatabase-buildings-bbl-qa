@@ -56,10 +56,22 @@ if __name__ == "__main__":
 
     # fix any baddies and delete any junk
 
+    # rectify
     sdereturn = cx_sde.execute_immediate(targetsdeconn,
                                          fetchsql('cleangeoms.sql'
                                                   ,targetgdb.database))
+    
+    # extract polygons only from any collections, post-rectify
+    sdereturn = cx_sde.execute_immediate(targetsdeconn,
+                                         fetchsql('compilecleanpolygons.sql'
+                                                  ,targetgdb.database))
+    
+    sdereturn = cx_sde.execute_immediate(targetsdeconn,
+                                         fetchsql('cleanpolygons.sql'
+                                                  ,targetgdb.database))
 
+    # any other bad inputs from dept of finance should be deleted
+    # to prevent unpredictable behavior in spatial calls
     sdereturn = cx_sde.execute_immediate(targetsdeconn,
                                          fetchsql('deletebadgeoms.sql'
                                                   ,targetgdb.database))
