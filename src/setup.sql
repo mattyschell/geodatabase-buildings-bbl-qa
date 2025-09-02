@@ -1,9 +1,7 @@
 
--- import.py uses arcpy to import the live property information portal
--- tax_lot_polygon to the building schema as tax_lot_polygon_dtm
--- shape will be sdo_geometry but srid is 3857 web mercator 
--- arcpy adds and deletes registered feature class tax_lot_polygon_dtm
--- our next work table, tax_lot_polygon, is unshackled 
+-- import.py uses arcpy to import the live property information portal 
+-- tax lots to the building schema as tax_lot_polygon_dtm (shape is sdo_geometry) 
+-- our next work table, tax_lot_polygon, is unshackled from the esri enterprise geodatabase
 begin
     execute immediate 'drop table tax_lot_polygon';
 exception
@@ -22,7 +20,7 @@ create table
 as select 
      a.objectid as objectid
     ,a.bbl as bbl
-    ,sdo_cs.transform(a.shape,2263) as shape
+    ,a.shape as shape
 from tax_lot_polygon_dtm a;
 alter table 
     tax_lot_polygon 

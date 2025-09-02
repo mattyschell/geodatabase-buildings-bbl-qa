@@ -15,6 +15,7 @@ on
     a.base_bbl = b.bbl
 where 
     sdo_geom.relate(a.shape,'anyinteract',b.shape,.0005) <> 'TRUE'
+and REGEXP_LIKE(a.base_bbl, '^\d+$')
 and b.bbl not in (
         select 
             bbl
@@ -34,7 +35,8 @@ select
 from 
     building_evw a
 where 
-    a.base_bbl in (
+    REGEXP_LIKE(a.base_bbl, '^\d+$')
+and a.base_bbl in (
         select 
             base_bbl 
         from 

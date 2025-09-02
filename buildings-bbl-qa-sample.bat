@@ -12,7 +12,9 @@ set HTTPS_PROXY=%HTTP_PROXY%
 set PYTHONPATH=%BASEPATH%\geodatabase-toiler\src\py
 set TARGETLOGDIR=%BASEPATH%geodatabase-scripts\logs\buildings_bbl_qa\
 set BBLQA=%BASEPATH%geodatabase-buildings-bbl-qa\
+set WORKGDB=%BBLQA%data\work.gdb
 set BATLOG=%TARGETLOGDIR%buildings-bbl-qa.log
+REM set PROPY=C:\Users\%USERNAME%\AppData\Local\Programs\ArcGIS\Pro\bin\Python\envs\arcgispro-py3\python.exe
 set PROPY=c:\Progra~1\ArcGIS\Pro\bin\Python\envs\arcgispro-py3\python.exe
 set TAXPOLYSDTM=TAX_LOT_POLYGON_DTM
 set GEODATABASESCRIPTS=%CD%
@@ -22,7 +24,7 @@ echo starting import of tax lots to %DBNAME% on %date% at %time% >> %BATLOG%
 ) || (
   %PROPY% %BBLQA%notify.py "Failed to delete %TAXPOLYSDTM% on %SDEFILE%" %NOTIFY% && EXIT /B 1
 )  
-%PROPY% %BBLQA%import.py %TAXPOLYSDTM% %SOURCEFC% && (
+%PROPY% %BBLQA%import.py %TAXPOLYSDTM% %SOURCEFC% %WORKGDB% && (
   echo. >> %BATLOG% echo imported target %TAXPOLYSDTM% on %date% at %time% >> %BATLOG%
 ) || (
   %PROPY% %BBLQA%notify.py "Failed to import %TAXPOLYSDTM% on %SDEFILE%" %NOTIFY% && EXIT /B 1
