@@ -1,6 +1,6 @@
 import sys
 import os
-import logging
+from logmanager import setup_logger
 
 # SET PYTHONPATH=C:\gis\geodatabase-toiler\src\py
 import gdb
@@ -14,15 +14,19 @@ if __name__ == "__main__":
     targetsdeconn = os.environ['SDEFILE']
     targetgdb = gdb.Gdb()
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
+    # delete-20250903-102841.log
+    logger = setup_logger('delete'
+                         ,os.environ['TARGETLOGDIR'])
 
-    logger.info('attempting to delete {0}'.format(targetfcname))
+    logger.info('starting delete {0}'.format(targetfcname))
 
     targetfc = fc.Fc(targetgdb
                     ,targetfcname)  
 
-    if targetfc.exists():
+    if targetfc.exists():        
+        logger.info('calling fc delete method on {0}'.format(targetfcname))
         targetfc.delete()
+    else:
+        logger.info('skipping delete. {0} doesnt exist'.format(targetfcname))
 
-    logger.info('completed deleting {0}'.format(targetfcname))
+    logger.info('completed delete {0}'.format(targetfcname))

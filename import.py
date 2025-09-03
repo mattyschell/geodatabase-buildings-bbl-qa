@@ -1,11 +1,11 @@
 import sys
 import os
-import logging
 import pathlib
 import time
 import arcpy
 
 from filegeodatabasemanager import localgdb
+from logmanager import setup_logger
 # SET PYTHONPATH=X:\xxx\geodatabase-toiler\src\py
 import gdb
 import fc
@@ -64,19 +64,8 @@ if __name__ == "__main__":
     targetgdb = gdb.Gdb()
 
     # logs\buildings-bbl-qa\import-20250403-160745.log
-    timestr = time.strftime("%Y%m%d-%H%M%S")
-    targetlog = os.path.join(os.environ['TARGETLOGDIR'] 
-                            ,'import-{0}.log'.format(timestr))
-
-    logging.basicConfig (
-        level=logging.INFO,  
-        format='%(asctime)s - %(levelname)s - %(message)s',  
-        handlers=[
-            logging.FileHandler(targetlog),  # log messages 
-            logging.StreamHandler()          # cc: screen 
-        ]
-    )
-    logger = logging.getLogger(__name__)
+    logger = setup_logger('import'
+                         ,os.environ['TARGETLOGDIR'])
 
     localworkgdb = localgdb(workgdb)
 
@@ -101,6 +90,10 @@ if __name__ == "__main__":
     # We do not overwrite, we do not trust me  
     # The caller must delete before we get here 
     # imports new tax_lot_polygon_dtm
+
+    logger.info('loading {0} to {1}'.format(localfc2263
+                                           ,targetgdb.sdeconn))
+
     targetgdb.importfeatureclass(localfc2263
                                 ,targetfcname)
 
@@ -121,11 +114,13 @@ if __name__ == "__main__":
     # fix any baddies and delete any junk
 
     # rectify
+    logger.info('rectifying any invalid geometries in {0}'.format(targetfcname))
     sdereturn = cx_sde.execute_immediate(targetsdeconn,
                                          fetchsql('cleangeoms.sql'
                                                   ,targetgdb.database))
     
     # extract polygons only from any collections, post-rectify
+    logger.info('tossing any non polygon artifacts from {0}'.format(targetfcname))
     sdereturn = cx_sde.execute_immediate(targetsdeconn,
                                          fetchsql('compilecleanpolygons.sql'
                                                   ,targetgdb.database))
@@ -136,6 +131,7 @@ if __name__ == "__main__":
 
     # any other bad inputs from dept of finance should be deleted
     # to prevent unpredictable behavior in spatial calls
+    logger.info('deleting any unrectifiable trash from from {0}'.format(targetfcname))
     sdereturn = cx_sde.execute_immediate(targetsdeconn,
                                          fetchsql('deletebadgeoms.sql'
                                                   ,targetgdb.database))
