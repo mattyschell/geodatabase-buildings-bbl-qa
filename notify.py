@@ -53,5 +53,10 @@ if __name__ == "__main__":
     msg['To'] = pemails
 
     smtp = smtplib.SMTP(smtpfrom)
-    smtp.sendmail(msg['From'], msg['To'].split(","), msg.as_string())
+    try:
+        smtp.sendmail(msg['From'], msg['To'].split(","), msg.as_string())
+    except smtplib.SMTPRecipientsRefused as e:
+        print("\n notify.py - Email not sent: relaying denied.")
+        print(" notify.py - This is expected from desktop environments.\n")
+
     smtp.quit()
