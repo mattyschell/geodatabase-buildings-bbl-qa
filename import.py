@@ -139,5 +139,8 @@ if __name__ == "__main__":
     logger.info('updating statistics on {0}'.format(targetfcname))
 
     output = targetfc.analyze(['BUSINESS'])
+
+    logger.info('deleting scratch file geodatabase {0}'.format(localworkgdb.gdb))
+    localworkgdb.clean()
     
     logger.info('completed import of {0}'.format(targetfcname))
