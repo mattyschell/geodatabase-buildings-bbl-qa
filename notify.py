@@ -34,7 +34,10 @@ if __name__ == "__main__":
         badbbls = getcsvfile(os.getcwd()
                             ,'bbl-qa.csv')    
 
-        if len(badbbls) > 4:
+        # skip header row; check for actual data
+        # https://github.com/mattyschell/geodatabase-buildings-bbl-qa/issues/30
+        data_rows = [line for line in badbbls.splitlines()[1:] if line.strip()]
+        if data_rows:
             content = "Please review these buildings with no spatial relationship " \
                    + "with their tax lot {0}".format(os.linesep) 
             content += badbbls
