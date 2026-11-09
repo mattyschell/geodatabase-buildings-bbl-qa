@@ -40,23 +40,11 @@ sqlplus schemaname/iluvesri247@databasename @run.sql
 ```
     output: bbl-qa.csv
 
-### 3. Helper: Refresh bbl-dab-history.csv
+### 3. Fix any that are category 1 or 2
 
-Execute somewhere with read-only access to the taxmap digital alteration book. We use this csv for reference in the review. 
+### 4. Add any acknowledged in category 3 or 4 to bbl-qa-ack.csv
 
-```bat
-sqlplus taxreadonly/iluvesri247@databasename @run-dab.sql
-```
-    output: bbl-dab-history.csv
-
-Commit bbl-dab-history.csv to Github for helpful csv filtering.
-
-
-### 4. Fix any that are category 1 or 2
-
-### 5. Add any acknowledged in category 3 or 4 to bbl-qa-ack.csv
-
-### 6. Reload acknowledged data and re-run the QA 
+### 5. Reload acknowledged data and re-run the QA 
 
 ```shell
 ./bbl-qa-writeack.sh
@@ -69,7 +57,7 @@ sqlplus schemaname/iluvesri247@databasename @run.sql
 
 Output bbl-qa.csv will be empty if all IDs were fixed or acknowledged
 
-### 7. Commit the latest bbl-qa-ack.csv to this repo
+### 6. Commit the latest bbl-qa-ack.csv to this repo
 
 # Steps - Automate a periodic QA
 

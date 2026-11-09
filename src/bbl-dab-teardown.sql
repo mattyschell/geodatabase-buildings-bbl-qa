@@ -1,1 +1,0 @@
-drop table bbl_dab;

@@ -133,7 +133,6 @@ scratch/
 buildings-bbl-qa.bat
 *qa.bat
 data/work.gdb/
-src/bbl-dab-load.sql
 *-dev.bat
 *-stg.bat
 *-prd.bat
